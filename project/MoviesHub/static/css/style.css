@@ -1,0 +1,8 @@
+body {
+    background:url(../image/image.jpg);
+    background-attachment: fixed;
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+   
+  }

@@ -1,0 +1,138 @@
+{% extends 'base.html'%}
+{%block content%}
+{%load static%}
+{%block nav%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+   
+      <nav class="navbar navbar-expand-lg p-2  navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fa-2xl" href="{% url 'home' %}"><img style="width: 3rem;" src="{% static 'image/icon.png' %}"
+                    alt=""></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'home' %}#about">About</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'home' %}#category">Categories</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'movies' %}">Movies</a>
+                  </li>
+                    {% if user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_Post' %}">create post</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'community' %}">community</a>
+                    </li>
+
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">logout</a>
+                    </li> -->
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Register</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                      <a class="nav-link" href="{% url 'login' %}">login</a>
+                    </li> -->
+                     {%endif%}
+                </ul>
+
+                {% if user.is_staff %}
+                
+                <a href="http://127.0.0.1:8000/admin/" class="btn btn-sm " style="color:  rgba(51, 255, 0, 0.55);margin-bottom: 0rem;" id="logOutBtn">hii {{user.first_name}} (admin)</a>
+                
+                <li class="nav-item dropdown">
+                  <a class="btn-sm btn dropdown-toggle" style="color:  rgba(255,255,255,.55);margin-bottom: 0rem" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    edit profile
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    {% if user.profile %}
+
+                <a  href="{% url 'edit_profile_page' user.profile.id %}"class="btn btn-sm " style="color:  rgba(255,255,255,.55);margin-bottom: 0rem;" id="logOutBtn" >Edit your picture</a>
+                {% else %}
+
+                <a  href="{% url 'create_profile_page'  %}" class="btn btn-sm " style="color:  rgba(255,255,255,.55);margin-bottom: 0rem;" id="logOutBtn">add your picture </a>
+                {%endif%}
+                <a  class="btn btn-sm " style="color:  rgba(255,255,255,.55);" id="logOutBtn"href="{% url 'edit_profile' %}">update Profile</a>
+
+                  </ul>
+                </li>
+                
+                
+                <a  class="btn btn-outline-dark btn-sm " style="color:  rgba(255,255,255,.55);" id="logOutBtn"href="{% url 'logout' %}">logout</a>
+                
+                
+                {% elif  user.is_authenticated %}
+                <h class="btn btn-sm " style="color:  rgba(255,255,255,.55);margin-bottom: 0rem;" id="logOutBtn">hii {{user.first_name}}</h> 
+
+                <li class="nav-item dropdown">
+                  <a class="btn-sm btn dropdown-toggle" style="color:  rgba(255,255,255,.55);margin-bottom: 0rem" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    edit profile
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    {% if user.profile %}
+
+                <a  href="{% url 'edit_profile_page' user.profile.id %}"class="btn btn-sm " style="color:  rgba(255,255,255,.55);margin-bottom: 0rem;" id="logOutBtn" >Edit your picture</a>
+                {% else %}
+
+                <a  href="{% url 'create_profile_page'  %}" class="btn btn-sm " style="color:  rgba(255,255,255,.55);margin-bottom: 0rem;" id="logOutBtn">add your picture </a>
+                {%endif%}
+
+                <a  class="btn  btn-sm " style="color:  rgba(255,255,255,.55);" id="logOutBtn"href="{% url 'edit_profile' %}">update Profile</a>
+                
+                  </ul>
+                </li>
+
+
+                <a  class="btn btn-outline-dark btn-sm " style="color:  rgba(255,255,255,.55);" id="logOutBtn"href="{% url 'logout' %}">logout</a>
+                {% else %}
+               
+                <a  class="btn btn-outline-dark btn-sm " style="color:  rgba(255,255,255,.55);" id="logOutBtn"href="{% url 'login' %}">login</a>
+                {%endif%}
+                
+              </div>
+        </div>
+    </nav>
+
+    {% endblock%}
+
+{% if user.is_authenticated %}
+{% if user.id == post.auther.id or user.is_staff  %}
+<div style="margin-top: 150px;" class="container">
+    <div style="color: white;">
+       
+        
+{%block title%}delete post{% endblock%}
+
+
+
+<h1>delete post .........</h1>
+<h3>Delete:{{post.title}}</h3>
+
+<div class="form-group container">
+<form method="POST">
+{% csrf_token%}</div>
+<button class="btn btn-danger">Delete</button>
+</form>
+</div>
+</div>
+
+{% endif%}
+
+{% endif%}
+
+
+{% endblock%}

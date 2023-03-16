@@ -1,0 +1,72 @@
+
+
+<!-- to show  all posts............
+
+ {% extends 'base.html'%}
+{%block content%}
+
+
+
+<h1>post</h1>
+
+<ul>
+{% for post in object_list %}
+   <li> 
+    <a href="{%url 'articleDetail' post.pk%}">{{post.title}}</a>  - {{post.auther}}
+    {{post.auther.last_name}}-{{post.timeCreation}}
+    
+    
+    <br/>
+    {{post.body| slice:'150'|safe}}...
+
+    {% if user.is_authenticated %}
+            {% if user.id == post.auther.id %}
+                <a href="{%url 'updatePost' post.pk%}">(edit)</a>
+                <a href="{%url 'deletePost' post.pk%}"><small>(Delete)</small></a>
+            {% endif %}
+   {% endif %}
+
+   </li>
+{% endfor %}
+</ul>
+{% endblock%}  -->
+......................................................
+<!-- Register ..............
+
+{% extends 'base.html'%}
+{%block content%}
+{%block title%}registiration{% endblock%}
+
+
+
+<h1>registiration</h1>
+<div class="form-group container">
+<form method="POST">
+{% csrf_token%}
+{{ form.as_p}}
+<button class="btn btn-danger">signup</button>
+</form>
+</div>
+{% endblock%} -->
+<!-- ...................................... -->
+ <!-- <li> 
+    <a href="{%url 'category' post.category  %}" style="color: rgb(196, 52, 9);"> {{post.category}}</a>
+
+    <a href="{%url 'articleDetail' post.pk%}" style="color: blue;">
+        
+        {{post.title}}</a>  - {{post.auther}}
+    {{post.auther.last_name}}-{{post.timeCreation}}
+    
+    
+    <br/>
+    {{post.body| slice:'150'|safe}}...
+
+    {% if user.is_authenticated or user.is_staff %}
+            {% if user.id == post.auther.id or user.is_staff %}
+            
+                <a href="{%url 'updatePost' post.pk%}"style="color: blue;"  >(edit......)</a>
+                <a href="{%url 'deletePost' post.pk%}"style="color: blue;"><small>(Delete)</small></a>
+            
+            {% endif %}
+   {% endif %}
+</li> -->

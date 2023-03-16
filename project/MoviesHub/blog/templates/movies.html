@@ -1,0 +1,163 @@
+{% extends 'base.html'%}
+{%block content%}
+
+{%load static%}
+
+{%block nav%}
+   
+      <nav class="navbar navbar-expand-lg p-2  navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fa-2xl" href="{% url 'home' %}"><img style="width: 3rem;" src="{% static 'image/icon.png' %}"
+                    alt=""></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'home' %}#about">About</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'home' %}#category">Categories</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'movies' %}">Movies</a>
+                  </li>
+                    {% if user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_Post' %}">create post</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'community' %}">community</a>
+                    </li>
+
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">logout</a>
+                    </li> -->
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">community</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Register</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                      <a class="nav-link" href="{% url 'login' %}">login</a>
+                    </li> -->
+                     {%endif%}
+                </ul>
+
+                {% if user.is_staff %}
+                
+                <a href="http://127.0.0.1:8000/admin/" class="btn btn-sm " style="color:  rgba(51, 255, 0, 0.55);margin-bottom: 0rem;" id="logOutBtn">hii {{user.first_name}} (admin)</a>
+                
+                <li class="nav-item dropdown">
+                  <a class="btn-sm btn dropdown-toggle" style="color:  rgba(255,255,255,.55);margin-bottom: 0rem" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    edit profile
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    {% if user.profile %}
+
+                <a  href="{% url 'edit_profile_page' user.profile.id %}"class="btn btn-sm " style="color:  rgba(255,255,255,.55);margin-bottom: 0rem;" id="logOutBtn" >Edit your picture</a>
+                {% else %}
+
+                <a  href="{% url 'create_profile_page'  %}" class="btn btn-sm " style="color:  rgba(255,255,255,.55);margin-bottom: 0rem;" id="logOutBtn">add your picture </a>
+                {%endif%}
+                <a  class="btn btn-sm " style="color:  rgba(255,255,255,.55);" id="logOutBtn"href="{% url 'edit_profile' %}">update Profile</a>
+
+                  </ul>
+                </li>
+                
+                
+                <a  class="btn btn-outline-dark btn-sm " style="color:  rgba(255,255,255,.55);" id="logOutBtn"href="{% url 'logout' %}">logout</a>
+                
+                
+                {% elif  user.is_authenticated %}
+                <h class="btn btn-sm " style="color:  rgba(255,255,255,.55);margin-bottom: 0rem;" id="logOutBtn">hii {{user.first_name}}</h> 
+
+                <li class="nav-item dropdown">
+                  <a class="btn-sm btn dropdown-toggle" style="color:  rgba(255,255,255,.55);margin-bottom: 0rem" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    edit profile
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    {% if user.profile %}
+
+                <a  href="{% url 'edit_profile_page' user.profile.id %}"class="btn btn-sm " style="color:  rgba(255,255,255,.55);margin-bottom: 0rem;" id="logOutBtn" >Edit your picture</a>
+                {% else %}
+
+                <a  href="{% url 'create_profile_page'  %}" class="btn btn-sm " style="color:  rgba(255,255,255,.55);margin-bottom: 0rem;" id="logOutBtn">add your picture </a>
+                {%endif%}
+
+                <a  class="btn  btn-sm " style="color:  rgba(255,255,255,.55);" id="logOutBtn"href="{% url 'edit_profile' %}">update Profile</a>
+                
+                  </ul>
+                </li>
+
+
+                <a  class="btn btn-outline-dark btn-sm " style="color:  rgba(255,255,255,.55);" id="logOutBtn"href="{% url 'logout' %}">logout</a>
+                {% else %}
+               
+                <a  class="btn btn-outline-dark btn-sm " style="color:  rgba(255,255,255,.55);" id="logOutBtn"href="{% url 'login' %}">login</a>
+                {%endif%}
+                
+              </div>
+        </div>
+    </nav>
+
+    {% endblock%}
+
+<body>
+    <div class="to-up position-fixed end-0 bottom-0 m-5 fa-2x">
+        <i class=" fas fa-arrow-alt-circle-up"></i>
+    </div>
+
+    
+
+    <div class="Movies py-5" id="#movies">
+        <div class="container py-5">
+            <div class="row g-5" id="showData">
+            </div>
+        </div>
+    </div>
+
+
+    <footer class=" bg-dark text-center py-5">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-3">
+                    <div class="footer text-white">
+                        <h6>&copy;Copyright. All Reserved <span>Yousef El-Khawanki</span></h6>
+                        <div class="footer-social d-flex justify-content-evenly align-items-baseline py-2">
+                            <a href="https://www.facebook.com/yusuf.mhamed.9/" class="fs-4 fa-brands fa-facebook"></a>
+                            <a href="https://www.linkedin.com/in/yousef-elkhawanki-b51456219/"
+                                class="fs-4 fa-brands fa-linkedin"></a>
+                            <a href="https://github.com/Y19M97" class="fs-4 fa-brands fa-github"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/Movies.js' %}"></script>
+</body>
+
+
+
+
+
+
+
+
+
+{%endblock%}
